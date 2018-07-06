@@ -9,7 +9,7 @@ import (
 	concatenate "github.com/paulvollmer/go-concatenate"
 )
 
-// Hash files into single token
+// Tokenizer hash files into single token
 func Tokenizer(hashFiles []string) string {
 
 	data, err := concatenate.FilesToBytes("\n", hashFiles...)

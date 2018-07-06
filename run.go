@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"fmt"
 	"os/exec"
+	"os/user"
 	"strings"
 )
 
@@ -32,18 +33,32 @@ func execCmd(cmdString string) bool {
 		return false
 	}
 
+	fmt.Print(out.String())
+
 	return true
 
+}
+
+var userCurrent = user.Current
+
+func getUserBind() string {
+
+	usr, userCurrentErr := userCurrent()
+
+	check(userCurrentErr)
+
+	return ("-u " + usr.Uid + ":" + usr.Gid)
 }
 
 // BuildRunCmd generate docker run command
 func BuildRunCmd(config BuildConfig) string {
 
+	userBind := getUserBind()
 	portsBind := prefixAndJoin(config.Ports, "-p")
 	volumesBind := prefixAndJoin(config.Volumes, "-v")
 	hashTag := Tokenizer(config.Hashfiles)
 
-	cmd := fmt.Sprintf("docker run -it %v %v %v:%v", volumesBind, portsBind, config.Image, hashTag)
+	cmd := fmt.Sprintf("docker run -it %v %v %v %v:%v", userBind, volumesBind, portsBind, config.Image, hashTag)
 
 	return cmd
 }
