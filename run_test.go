@@ -39,3 +39,17 @@ func TestBuildRunCmd(t *testing.T) {
 	}
 
 }
+
+func Test_execCmd(t *testing.T) {
+
+	cmdString := "echo test"
+
+	got := execCmd(cmdString)
+
+	want := true
+
+	if got != want {
+		t.Errorf("execCmd(%q) == %t, want %t", cmdString, got, want)
+	}
+
+}

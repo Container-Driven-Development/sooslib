@@ -20,9 +20,14 @@ func prefixAndJoin(list []string, prefix string) string {
 
 }
 
+var execCommand = exec.Command
+
 func execCmd(cmdString string) bool {
 
-	cmd := exec.Command(cmdString)
+	cmdStringSplitted := strings.Split(cmdString, " ")
+	command, args := cmdStringSplitted[0], cmdStringSplitted[1:]
+
+	cmd := execCommand(command, args...)
 	var out bytes.Buffer
 	cmd.Stdout = &out
 	runErr := cmd.Run()
