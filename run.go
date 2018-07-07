@@ -60,7 +60,10 @@ func BuildRunCmd(config BuildConfig) string {
 
 	userBind := getUserBind()
 	portsBind := prefixAndJoin(config.Ports, "-p")
-	volumesBind := prefixAndJoin(config.Volumes, "-v")
+
+	volumes := append(config.Volumes, cwd()+":/build/app")
+
+	volumesBind := prefixAndJoin(volumes, "-v")
 	hashTag := Tokenizer(config.Hashfiles)
 
 	cmd := fmt.Sprintf("docker run -it %v %v %v %v:%v", userBind, volumesBind, portsBind, config.Image, hashTag)
