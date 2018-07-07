@@ -67,14 +67,3 @@ func BuildRunCmd(config BuildConfig) string {
 
 	return cmd
 }
-
-// Run build container
-func Run(configFile string) {
-
-	config := Config(configFile)
-
-	cmd := BuildRunCmd(config)
-
-	execCmd(cmd)
-
-}

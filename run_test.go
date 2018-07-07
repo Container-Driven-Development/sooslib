@@ -41,15 +41,30 @@ func TestBuildRunCmd(t *testing.T) {
 }
 
 func Test_execCmd(t *testing.T) {
-
-	cmdString := "echo test"
-
-	got := execCmd(cmdString)
-
-	want := true
-
-	if got != want {
-		t.Errorf("execCmd(%q) == %t, want %t", cmdString, got, want)
+	type args struct {
+		cmdString string
 	}
-
+	tests := []struct {
+		name string
+		args args
+		want bool
+	}{
+		{
+			name: "simple",
+			args: args{cmdString: "echo test"},
+			want: true,
+		},
+		{
+			name: "empty",
+			args: args{cmdString: "echo -n"},
+			want: false,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := execCmd(tt.args.cmdString); got != tt.want {
+				t.Errorf("execCmd() = %v, want %v", got, tt.want)
+			}
+		})
+	}
 }
