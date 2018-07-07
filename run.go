@@ -22,7 +22,8 @@ func prefixAndJoin(list []string, prefix string) string {
 
 var execCommand = exec.Command
 
-func execCmd(cmdString string) bool {
+// ExecCmd to execute command
+func ExecCmd(cmdString string) bool {
 
 	cmdStringSplitted := strings.Split(cmdString, " ")
 	command, args := cmdStringSplitted[0], cmdStringSplitted[1:]
