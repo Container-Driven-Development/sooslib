@@ -50,7 +50,7 @@ func Test_execCmd(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := execCmd(tt.args.cmdString); got != tt.want {
+			if got := ExecCmd(tt.args.cmdString); got != tt.want {
 				t.Errorf("execCmd() = %v, want %v", got, tt.want)
 			}
 		})
